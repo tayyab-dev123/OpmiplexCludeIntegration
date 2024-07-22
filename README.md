@@ -75,54 +75,7 @@ yarn dev
 ANTHROPIC_API_KEY=******
 ```
 
-2. Update the `chat` in `api`
 
-```ts
-import Anthropic from "@anthropic-ai/sdk";
-import { OpenAIStream, StreamingTextResponse } from "ai";
-
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-});
-
-export const runtime = "edge";
-
-export async function POST(req: Request) {
-  const {
-    messages,
-    model,
-    temperature,
-    max_tokens,
-    top_p,
-    frequency_penalty,
-    presence_penalty,
-  } = await req.json();
-
-  const response = await anthropic.messages.create({
-    stream: true,
-    model: model,
-    temperature: temperature,
-    max_tokens: max_tokens,
-    top_p: top_p,
-    frequency_penalty: frequency_penalty,
-    presence_penalty: presence_penalty,
-    messages: messages,
-  });
-
-  const stream = OpenAIStream(response);
-  return new StreamingTextResponse(stream);
-}
-```
-
-3. Update the `data` in `utils`
-
-```ts
-export const MODELS = [
-  { label: "Claude 3 Haiku", value: "claude-3-haiku-20240307" },
-  { label: "Claude 3 Sonnet", value: "claude-3-sonnet-20240229" },
-  { label: "Claude 3 Opus", value: "claude-3-opus-20240229" },
-];
-```
 
 ## Disclaimer
 
@@ -180,6 +133,5 @@ This project is licensed under the [AGPL-3.0 license](LICENSE).
 
 ## Contact
 
-If you have any questions or suggestions, feel free to reach out to us at [Contact](https://bishalsaha.com/contact).
 
 Happy coding! 🚀
